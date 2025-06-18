@@ -20,7 +20,7 @@ function Pending() {
     // Backendga stars sotib olishni so‘rov yuborish
     async function sendBuyStars() {
         try {
-            const response = await fetch("https://api.starstg.uz/buy-stars", {
+            const response = await fetch("https://tradingpro.uz/buy-stars", {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ username, quantity }),
@@ -53,7 +53,7 @@ function Pending() {
                 return;
             }
             try {
-                const res = await fetch("https://api.starstg.uz/check-payment", {
+                const res = await fetch("https://tradingpro.uz/check-payment", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ comment, amount_in_nano }),

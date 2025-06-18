@@ -20,7 +20,7 @@ function Home() {
 useEffect(() => {
   async function fetchTonPrice() {
     try {
-      const res = await fetch("https://api.starstg.uz/ton_price");
+      const res = await fetch("https://tradingpro.uz/ton_price");
       const data = await res.json();
       if (data.price) {
         setTonPrice(data.price);
@@ -50,7 +50,7 @@ const calculateTonPrice = (stars) => {
 
     if (value.length >= 3) {
       try {
-        const response = await fetch("https://api.starstg.uz/search", {
+        const response = await fetch("https://tradingpro.uz/search", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"

@@ -26,7 +26,7 @@ useEffect(() => {
         setTonPrice(data.price);
       }
     } catch (err) {
-      console.error("TON narxini olishda xatolik:", err);
+      console.error("TON narxini olishda xatolikzzz:", err);
     }
   }
 

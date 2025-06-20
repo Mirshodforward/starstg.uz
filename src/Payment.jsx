@@ -78,7 +78,7 @@ export default function Payment() {
       .catch(() => setComment("Xatolik"));
   }, [username, quantity, tonAmount]);
 
-  // To‘lovni tekshirish
+  // To'lovni tekshirish
   const checkPayment = async () => {
     if (!comment || !amount_in_nano) return;
     setChecking(true);
@@ -147,7 +147,6 @@ export default function Payment() {
           <div className="modal-text">⭐ Stars muvaffaqiyatli yuborildi!</div>
           <button
             className="main-btn"
-            style={{ marginTop: 20 }}
             onClick={() => {
               setShowModal(false);
               navigate("/");
@@ -162,10 +161,9 @@ export default function Payment() {
       return (
         <>
           <div className="star-anim error">&#10060;</div>
-          <div className="modal-text">Xatolik: Stars yuborilmadi.<br/> Qayta urinib ko‘ring.</div>
+          <div className="modal-text">Xatolik: Stars yuborilmadi.<br/> Qayta urinib ko'ring.</div>
           <button
             className="main-btn"
-            style={{ marginTop: 20, background: "#e94f4f" }}
             onClick={() => {
               setModalStage("sending");
               setTimeout(() => sendBuyStars(), 700);
@@ -189,55 +187,66 @@ export default function Payment() {
       ? "pay-btn checking"
       : "pay-btn";
   const btnText = paid
-    ? "To‘langan"
+    ? "Status: Paid"
     : checking
-    ? "Tekshirilmoqda..."
-    : "To‘lanmagan";
+    ? "Checking..."
+    : "Status: Unpaid";
 
   return (
-    <div className="payment-container">
-      <button className="back-btn" onClick={() => navigate("/")}>⬅️ Orqaga</button>
-      <h1>To'lov sahifasi</h1>
+    <div className="page-container">
+      <header>
+        <div className="brand-logo">Stars Paymee</div>
+        <button className="back-btn" onClick={() => navigate("/")}>
+          ⬅️ Orqaga
+        </button>
+      </header>
 
-      <div className="profile-preview">
-        {imageUrl ? (
-          <img src={imageUrl} alt="Profil rasmi" className="profile-img" />
-        ) : (
-          <div className="img-skeleton" />
-        )}
-        <div className="name">{fullName || "..."}</div>
-        {profileError && <div className="error">{profileError}</div>}
+      <main className="content-area">
+       
+
+        <div className="profile-preview">
+          {imageUrl ? (
+            <img src={imageUrl} alt="Profil rasmi" className="profile-img" />
+          ) : (
+            <div className="img-skeleton" />
+          )}
+          <div className="name">{fullName || "..."}</div>
+          {profileError && <div className="error">{profileError}</div>}
+        </div>
+
+        <div className="details">
+          <p>@{username} ga {quantity}⭐ Stars olinmoqda!</p>
+          <p>💎 Ton to'lovi: {tonAmount.toFixed(2)} </p>
+          <hr/>
+          <p>Qr code ustiga bosing Yoki tonkeeper orqali scanerlang!</p>
+        </div>
+        
+        <div className="qr-block">
+          {!qrReady ? (
+            <div className="qr-loader">QR code yuklanmoqda...</div>
+          ) : (
+            <a href={tonLink} target="_blank" rel="noopener noreferrer" style={{display: "inline-block"}}>
+              <QRCode value={tonLink} size={220} />
+            </a>
+          )}
+        </div>
+      </main>
+
+      <div className="end-button">
+        <p>To'lovdan so'ng tugmani bosing!</p>
+        <button
+          className={btnClass}
+          onClick={paid ? undefined : checkPayment}
+          disabled={checking}
+        >
+          {btnText}
+        </button>
+        <footer>
+          <p>
+            &copy; 2025 <b>StarsPaymee</b> All rights reserved
+          </p>
+        </footer>
       </div>
-
-      <div className="details">
-        <p>@{username} ga {quantity}⭐ Stars olinmoqda!</p>
-        <p>💎 Ton to'lovi: {tonAmount.toFixed(6)} </p>
-        {/* <p>{tonAddress} manzilga {tonAmount.toFixed(6)}💎 Tonni quyidagi camment orqali yuboring</p> */}
-        {/* <p>Comment: <b>{comment || "Yuklanmoqda..."}</b></p> */}
-        <p> Qr code ustiga bosing Yoki tonkeeper orqali scanerlang!</p>
-      </div>
-      
-      <div className="qr-block">
-  {!qrReady ? (
-    <div className="qr-loader">QR code yuklanmoqda...</div>
-  ) : (
-    <a href={tonLink} target="_blank" rel="noopener noreferrer" style={{display: "inline-block"}}>
-      <QRCode value={tonLink} size={220} />
-      {/* Istasangiz ustiga hover effekti ham CSS bilan qo‘shishingiz mumkin */}
-    </a>
-  )}
-</div>
-
-      
-      <button
-        className={btnClass}
-        onClick={paid ? undefined : checkPayment}
-        disabled={checking}
-        style={{ marginTop: 30 }}
-      >
-        {btnText}
-      </button>
-      
 
       {/* Modal (stars yuborilmoqda, muvaffaqiyatli, yoki xatolik) */}
       {showModal && (
